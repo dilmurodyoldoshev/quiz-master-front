@@ -1,0 +1,183 @@
+/* ==================== Umumiy container ==================== */
+.teacher-container {
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: #eff6ff;
+    font-family: 'Arial', sans-serif;
+}
+
+/* ==================== Sarlavha ==================== */
+.teacher-container h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #1e40af;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+}
+
+/* ==================== Form kartasi (Create Quiz) ==================== */
+.form-card, .quiz-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    margin-bottom: 2rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.form-card:hover, .quiz-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+}
+
+.form-card h2, .quiz-card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #1e40af;
+}
+
+/* ==================== Inputlar ==================== */
+input, select {
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%;
+}
+
+input:focus, select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+}
+
+/* ==================== Buttonlar ==================== */
+button {
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Maxsus button ranglari */
+.btn-green {
+    background: linear-gradient(to right, #22c55e, #16a34a);
+    color: white;
+}
+
+.btn-red {
+    background: linear-gradient(to right, #ef4444, #b91c1c);
+    color: white;
+}
+
+.btn-yellow {
+    background: linear-gradient(to right, #facc15, #ca8a04);
+    color: white;
+}
+
+.btn-gray {
+    background-color: #9ca3af;
+    color: white;
+}
+
+/* ==================== Quizzes ro'yxati ==================== */
+.quiz-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.quiz-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f3f4f6;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    margin-bottom: 0.5rem;
+    transition: background 0.2s;
+}
+
+.quiz-list li:hover {
+    background: #e0f2fe;
+}
+
+.quiz-list button {
+    margin-left: 0.5rem;
+}
+
+/* ==================== Questions ==================== */
+.questions {
+    margin-top: 1rem;
+}
+
+.questions p {
+    background: #f9fafb;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.questions .new-question {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* ==================== Messages (WebSocket) ==================== */
+.messages {
+    margin-top: 1.5rem;
+}
+
+.messages ul {
+    list-style: none;
+    padding: 0;
+}
+
+.messages li {
+    background: #e0f2fe;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* ==================== Alerts ==================== */
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.alert-error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.alert-success {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 768px) {
+    .questions .new-question {
+        flex-direction: column;
+    }
+
+    input, select, button {
+        width: 100%;
+    }
+}

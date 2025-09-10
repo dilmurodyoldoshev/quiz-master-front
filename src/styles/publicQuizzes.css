@@ -1,0 +1,113 @@
+/* ==================== Umumiy container ==================== */
+.public-container {
+    min-height: 100vh;
+    padding: 2rem;
+    background: #f3f4f6;
+    font-family: 'Arial', sans-serif;
+}
+
+/* ==================== Sarlavha ==================== */
+.public-container h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+    color: #1e40af;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* ==================== Quizzes ro'yxati ==================== */
+.quiz-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.quiz-list-item {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.quiz-list-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.quiz-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.quiz-description {
+    font-size: 1rem;
+    color: #374151;
+}
+
+/* ==================== Tugma (agar kerak bo'lsa) ==================== */
+.quiz-list-item button {
+    align-self: flex-start;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(to right, #3b82f6, #1e40af);
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.quiz-list-item button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* ==================== Loading va empty state ==================== */
+.loading-text, .empty-text {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+/* ==================== Alerts (xato / muvaffaqiyat) ==================== */
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alert-error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.alert-success {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+/* ==================== Responsive ==================== */
+@media (min-width: 640px) {
+    .quiz-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .quiz-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
