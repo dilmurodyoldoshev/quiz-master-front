@@ -1,29 +1,39 @@
 // src/pages/AdminDashboard.jsx
 import React, { useEffect, useState } from "react";
-import { getUsers, addUser, deleteUser } from "../index.js";
+import UserList from "../components/UserList.jsx";
+import axios from "axios";
 import "../styles/admin.css";
 
 function AdminDashboard() {
     const [users, setUsers] = useState([]);
     const [newUser, setNewUser] = useState({
+        firstName: "",
+        lastName: "",
         username: "",
+        phone: "",
         email: "",
         password: "",
-        role: "STUDENT",
+        role: "STUDENT"
     });
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+
     const token = localStorage.getItem("token");
+    const API_URL = "http://localhost:8080/api/users/create";
 
     // ================= Fetch Users =================
     const fetchUsers = async () => {
+        setError(""); setSuccess("");
+        if (!token) return;
+
         try {
-            if (!token) return;
-            const data = await getUsers(token);
-            setUsers(data?.data || []); // undefined bo‘lsa bo‘sh array
+            const res = await axios.get("http://localhost:8080/api/users", {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setUsers(res.data.data || []);
         } catch (err) {
             console.error(err);
-            setError("Foydalanuvchilarni olishda xatolik");
+            setError(err.response?.data?.message || "Foydalanuvchilarni olishda xatolik");
         }
     };
 
@@ -34,8 +44,7 @@ function AdminDashboard() {
     // ================= Add User =================
     const handleAddUser = async (e) => {
         e.preventDefault();
-        setError("");
-        setSuccess("");
+        setError(""); setSuccess("");
 
         if (newUser.role === "ADMIN") {
             setError("❌ Admin foydalanuvchi qo‘shib bo‘lmaydi!");
@@ -43,29 +52,24 @@ function AdminDashboard() {
         }
 
         try {
-            await addUser(newUser, token);
+            const payload = { ...newUser };
+            await axios.post(API_URL, payload, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
             setSuccess(`✅ ${newUser.username} muvaffaqiyatli qo‘shildi!`);
-            setNewUser({ username: "", email: "", password: "", role: "STUDENT" });
-
-            // Foydalanuvchilar ro‘yxatini qayta olish
+            setNewUser({
+                firstName: "",
+                lastName: "",
+                username: "",
+                phone: "",
+                email: "",
+                password: "",
+                role: "STUDENT"
+            });
             fetchUsers();
         } catch (err) {
-            console.error(err);
-            setError(err.message || "Foydalanuvchini qo‘shishda xatolik");
-        }
-    };
-
-    // ================= Delete User =================
-    const handleDelete = async (id) => {
-        setError("");
-        setSuccess("");
-        try {
-            await deleteUser(id, token);
-            setSuccess("🗑️ Foydalanuvchi o‘chirildi!");
-            setUsers(prev => prev.filter(u => u?.id !== id));
-        } catch (err) {
-            console.error(err);
-            setError(err.message || "Foydalanuvchini o‘chirishda xatolik");
+            console.error(err.response?.data || err);
+            setError(err.response?.data?.message || "Foydalanuvchini qo‘shishda xatolik");
         }
     };
 
@@ -73,88 +77,98 @@ function AdminDashboard() {
         <div className="admin-container">
             <h1 className="admin-title">👨‍💻 Admin Dashboard</h1>
 
-            {/* Alerts */}
             {error && <div className="alert alert-error">{error}</div>}
             {success && <div className="alert alert-success">{success}</div>}
 
-            {/* Add User Form */}
+            {/* ================= Add User Form ================= */}
             <div className="form-card">
                 <h2>➕ Yangi foydalanuvchi qo‘shish</h2>
                 <form onSubmit={handleAddUser} className="form-grid">
-                    <input
-                        type="text"
-                        placeholder="👤 Username"
-                        value={newUser.username}
-                        onChange={e => setNewUser({ ...newUser, username: e.target.value })}
-                        required
-                    />
-                    <input
-                        type="email"
-                        placeholder="📧 Email"
-                        value={newUser.email}
-                        onChange={e => setNewUser({ ...newUser, email: e.target.value })}
-                        required
-                    />
-                    <input
-                        type="password"
-                        placeholder="🔑 Password"
-                        value={newUser.password}
-                        onChange={e => setNewUser({ ...newUser, password: e.target.value })}
-                        required
-                    />
-                    <select
-                        value={newUser.role}
-                        onChange={e => setNewUser({ ...newUser, role: e.target.value })}
-                    >
-                        <option value="TEACHER">👨‍🏫 TEACHER</option>
-                        <option value="STUDENT">🎓 STUDENT</option>
-                    </select>
+                    <label>
+                        📝 First Name
+                        <input
+                            type="text"
+                            value={newUser.firstName}
+                            onChange={e => setNewUser({ ...newUser, firstName: e.target.value })}
+                            placeholder="First Name"
+                            required
+                        />
+                    </label>
+
+                    <label>
+                        📝 Last Name
+                        <input
+                            type="text"
+                            value={newUser.lastName}
+                            onChange={e => setNewUser({ ...newUser, lastName: e.target.value })}
+                            placeholder="Last Name"
+                            required
+                        />
+                    </label>
+
+                    <label>
+                        👤 Username
+                        <input
+                            type="text"
+                            value={newUser.username}
+                            onChange={e => setNewUser({ ...newUser, username: e.target.value })}
+                            placeholder="Username"
+                            required
+                        />
+                    </label>
+
+                    <label>
+                        📞 Phone
+                        <input
+                            type="text"
+                            value={newUser.phone}
+                            onChange={e => setNewUser({ ...newUser, phone: e.target.value })}
+                            placeholder="Phone"
+                            required
+                        />
+                    </label>
+
+                    <label>
+                        📧 Email
+                        <input
+                            type="email"
+                            value={newUser.email}
+                            onChange={e => setNewUser({ ...newUser, email: e.target.value })}
+                            placeholder="Email"
+                            required
+                        />
+                    </label>
+
+                    <label>
+                        🔑 Password
+                        <input
+                            type="password"
+                            value={newUser.password}
+                            onChange={e => setNewUser({ ...newUser, password: e.target.value })}
+                            placeholder="Password"
+                            required
+                        />
+                    </label>
+
+                    <label>
+                        Role
+                        <select
+                            value={newUser.role}
+                            onChange={e => setNewUser({ ...newUser, role: e.target.value })}
+                        >
+                            <option value="TEACHER">👨‍🏫 TEACHER</option>
+                            <option value="STUDENT">🎓 STUDENT</option>
+                        </select>
+                    </label>
+
                     <button type="submit" className="btn-green">Qo‘shish</button>
                 </form>
             </div>
 
-            {/* Users Table */}
+            {/* ================= Users List ================= */}
             <div className="table-card">
                 <h2>📋 Foydalanuvchilar ro‘yxati</h2>
-                <div className="table-wrapper">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {(users || []).map(u => (
-                            <tr key={u?.id}>
-                                <td>{u?.id}</td>
-                                <td>{u?.username}</td>
-                                <td>{u?.email}</td>
-                                <td>
-                                        <span className={`role-tag ${u?.role === "TEACHER" ? "role-teacher" : "role-student"}`}>
-                                            {u?.role}
-                                        </span>
-                                </td>
-                                <td>
-                                    <button onClick={() => handleDelete(u?.id)} className="btn-delete">
-                                        O‘chirish
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                        {(!users || users.length === 0) && (
-                            <tr>
-                                <td colSpan={5} className="empty-text">
-                                    🚫 Hozircha foydalanuvchi yo‘q
-                                </td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
+                <UserList users={users} showDelete={false} />
             </div>
         </div>
     );

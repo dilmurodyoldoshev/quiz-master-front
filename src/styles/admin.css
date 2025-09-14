@@ -1,8 +1,12 @@
-/* ==================== Umumiy stillar ==================== */
+/* ==================== Global ==================== */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+html {
+    font-size: 16px;
 }
 
 body {
@@ -19,7 +23,7 @@ body {
     min-height: 100vh;
 }
 
-/* Headings */
+/* ==================== Headings ==================== */
 h1, h2, h3 {
     font-weight: 700;
     color: #1d4ed8;
@@ -62,7 +66,7 @@ h3 {
 }
 
 /* ==================== Cards ==================== */
-.form-card, .table-card, .quiz-card, .login-card {
+.card {
     background: #fff;
     padding: 2rem;
     border-radius: 16px;
@@ -70,10 +74,18 @@ h3 {
     margin-bottom: 2rem;
 }
 
-/* ==================== Formlar ==================== */
+.form-card, .table-card, .quiz-card, .login-card {
+    /* SCSS @extend o'rniga CSS da shunchaki card klassi ishlatiladi */
+    background: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+
+/* ==================== Forms ==================== */
 form {
     display: grid;
-    grid-template-columns: 1fr;
     gap: 1rem;
 }
 
@@ -99,7 +111,7 @@ button {
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    transition: transform 0.2s, opacity 0.2s;
+    transition: transform 0.2s, opacity 0.2s, background 0.2s;
 }
 
 button:hover {
@@ -107,7 +119,7 @@ button:hover {
     transform: translateY(-1px);
 }
 
-/* ==================== Table ==================== */
+/* ==================== Tables ==================== */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -134,13 +146,14 @@ tbody tr:hover {
     background: #f9fafb;
 }
 
-/* Role tags */
+/* ==================== Role Tags ==================== */
 .role-tag {
     display: inline-block;
     padding: 0.3rem 0.8rem;
     border-radius: 9999px;
     color: white;
     font-size: 0.85rem;
+    cursor: default;
 }
 
 .role-teacher {
@@ -151,7 +164,7 @@ tbody tr:hover {
     background-color: #22c55e;
 }
 
-/* Delete button */
+/* ==================== Delete Button (unused) ==================== */
 .btn-delete {
     padding: 0.4rem 0.8rem;
     background: #ef4444;
@@ -171,7 +184,8 @@ tbody tr:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
+    min-height: 100vh;
+    padding: 1rem;
 }
 
 .login-card {
@@ -181,6 +195,7 @@ tbody tr:hover {
     border-radius: 16px;
     background: white;
     box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    animation: fadeIn 0.6s ease-in-out;
 }
 
 .login-title {
@@ -212,7 +227,7 @@ tbody tr:hover {
     margin-bottom: 0.5rem;
 }
 
-/* ==================== WebSocket messages ==================== */
+/* ==================== WebSocket Messages ==================== */
 .messages-list {
     max-height: 200px;
     overflow-y: auto;
@@ -226,6 +241,18 @@ tbody tr:hover {
     border-bottom: 1px solid #e5e7eb;
 }
 
+/* ==================== Animations ==================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* ==================== Responsive ==================== */
 @media (min-width: 640px) {
     form {
@@ -236,5 +263,15 @@ tbody tr:hover {
 @media (min-width: 1024px) {
     form {
         grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    table {
+        font-size: 0.85rem;
+    }
+
+    .messages-list {
+        max-height: 150px;
     }
 }
