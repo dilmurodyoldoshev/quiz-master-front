@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getPublicQuizzes } from "../index.js";
+import { getPublicQuizzes } from "../api/index.js";
 import "../styles/publicQuizzes.css";
 
 function PublicQuizzes() {

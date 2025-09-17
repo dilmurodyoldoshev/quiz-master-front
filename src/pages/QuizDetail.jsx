@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getQuizById, getQuizQuestions } from "../index.js";
+import { getQuizById, getQuizQuestions } from "../api/index.js";
 import "../styles/quizDetail.css";
 
 function QuizDetail() {
