@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
@@ -9,9 +10,9 @@ const PrivateRoute = ({ children, allowedRoles }) => {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
-    if (!token || !role) return <Navigate to="/" />;
+    if (!token || !role) return <Navigate to="/login" />;
 
-    if (allowedRoles && !allowedRoles.includes(role)) return <Navigate to="/" />;
+    if (allowedRoles && !allowedRoles.includes(role)) return <Navigate to="/login" />;
 
     return children;
 };
@@ -20,7 +21,8 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Login />} />
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<Login />} />
                 <Route
                     path="/admin"
                     element={
