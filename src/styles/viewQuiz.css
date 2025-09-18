@@ -1,0 +1,100 @@
+/* src/styles/viewQuiz.css */
+
+.p-4 {
+    padding: 1rem; /* page padding */
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827; /* Gray-900 */
+}
+
+h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    margin: 4px 0;
+    font-size: 0.95rem;
+    color: #374151; /* Gray-700 */
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.text-green-600 {
+    color: #16a34a; /* Green */
+}
+
+.text-gray-500 {
+    color: #6b7280; /* Gray */
+}
+
+/* Buttons container */
+.flex.gap-2 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* Buttons */
+button {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+.bg-blue-500 { background-color: #3b82f6; color: #fff; }
+.bg-blue-500:hover { background-color: #2563eb; }
+
+.bg-yellow-500 { background-color: #f59e0b; color: #fff; }
+.bg-yellow-500:hover { background-color: #d97706; }
+
+.bg-gray-500 { background-color: #6b7280; color: #fff; }
+.bg-gray-500:hover { background-color: #4b5563; }
+
+.bg-purple-500 { background-color: #8b5cf6; color: #fff; }
+.bg-purple-500:hover { background-color: #7c3aed; }
+
+/* Questions list */
+ul.list-disc {
+    list-style-type: disc;
+    padding-left: 1.25rem; /* 20px */
+}
+
+ul.list-disc li {
+    margin-bottom: 0.5rem;
+}
+
+ul.list-circle {
+    list-style-type: circle;
+    padding-left: 1.5rem; /* 24px */
+    margin-top: 0.2rem;
+}
+
+ul.list-circle li {
+    margin-bottom: 0.2rem;
+    color: #374151;
+    font-size: 0.9rem;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 480px) {
+    .flex.gap-2 {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+}
