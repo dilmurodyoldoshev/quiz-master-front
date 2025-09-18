@@ -5,11 +5,17 @@ import AdminLayout from "./pages/AdminLayout";
 import UserListPage from "./pages/UserListPage";
 import AddUserPage from "./pages/AddUserPage";
 import ProfilePage from "./pages/ProfilePage";
-import TeacherDashboard from "./pages/TeacherDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
 import LandingPage from "./pages/LandingPage";
 
-// PrivateRoute component
+// Teacher
+import TeacherLayout from "./pages/TeacherLayout.jsx";
+import MyQuizzesPage from "./pages/MyQuizzesPage.jsx";
+import CreateQuizPage from "./pages/CreateQuizPage.jsx";
+import AddQuestionPage from "./pages/AddQuestionPage.jsx";
+import ViewQuizPage from "./pages/ViewQuizPage.jsx";
+import ViewResultsPage from "./pages/ViewResultsPage.jsx";
+
 const PrivateRoute = ({ children, allowedRoles }) => {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
@@ -41,14 +47,21 @@ function App() {
                     <Route path="profile" element={<ProfilePage />} />
                 </Route>
 
-                {/* Teacher */}
+                {/* Teacher routes */}
                 <Route path="/teacher" element={
                     <PrivateRoute allowedRoles={["TEACHER"]}>
-                        <TeacherDashboard />
+                        <TeacherLayout />
                     </PrivateRoute>
-                } />
+                }>
+                    <Route path="quizzes" element={<MyQuizzesPage />} />
+                    <Route path="quizzes/:quizId/questions" element={<AddQuestionPage />} />
+                    <Route path="quizzes/:quizId/view" element={<ViewQuizPage />} />
+                    <Route path="quizzes/:quizId/results" element={<ViewResultsPage />} />
+                    <Route path="create-quiz" element={<CreateQuizPage />} />
+                    <Route path="profile" element={<ProfilePage />} />
+                </Route>
 
-                {/* Student */}
+                {/* Student routes */}
                 <Route path="/student" element={
                     <PrivateRoute allowedRoles={["STUDENT"]}>
                         <StudentDashboard />

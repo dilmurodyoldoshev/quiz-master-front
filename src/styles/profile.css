@@ -1,73 +1,104 @@
+/* src/styles/profile.css */
+
 .profile-container {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 40px;
-    background-color: #f3f4f6; /* light gray */
-    font-family: Arial, sans-serif;
-}
-
-.profile-card {
-    width: 100%;
-    max-width: 360px;
-    background-color: #fff;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    text-align: center;
-}
-
-.profile-header {
-    height: 120px;
-    background: linear-gradient(90deg, #3b82f6, #6366f1); /* blue to indigo */
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 40px 20px;
+    min-height: 80vh;
+    background-color: #f5f5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.profile-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    overflow: hidden;
+    max-width: 400px;
+    width: 100%;
+    text-align: center; /* avatar va sarlavha markazlashgan */
+    padding: 30px 20px;
+}
+
+.profile-header {
+    margin-bottom: 20px;
 }
 
 .avatar {
     width: 80px;
     height: 80px;
-    background-color: #fff;
+    margin: 0 auto;
+    background-color: #4f46e5; /* Indigo-600 */
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: bold;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 32px;
-    font-weight: bold;
-    color: #374151;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .profile-info {
-    padding: 24px;
+    text-align: left; /* label–value uchun chapdan tekislash */
 }
 
 .profile-info h2 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 8px;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #111827; /* Gray-900 */
+    text-align: center; /* ismi markazda qoladi */
 }
 
 .profile-info p {
-    font-size: 16px;
-    color: #374151;
-    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between; /* label va value bir qatorda */
+    margin: 6px 0;
+    font-size: 14px;
+    color: #374151; /* Gray-700 */
+}
+
+.profile-info p span:first-child {
+    font-weight: 500;
+    color: #6b7280; /* Gray-500 */
+}
+
+.profile-info p span:last-child {
+    text-align: right;
+    color: #111827; /* Gray-900 */
 }
 
 .profile-info button {
+    margin-top: 20px;
     width: 100%;
-    padding: 12px;
-    background-color: #ef4444; /* red */
-    color: #fff;
-    font-weight: 500;
+    padding: 10px 0;
+    background-color: #ef4444; /* Red-500 */
+    color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
+    font-weight: 500;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
 .profile-info button:hover {
-    background-color: #dc2626; /* darker red */
+    background-color: #dc2626; /* Red-600 */
+}
+
+/* Responsive kichik ekranlar uchun */
+@media (max-width: 480px) {
+    .profile-card {
+        padding: 20px 15px;
+    }
+
+    .profile-info p {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-info p span:last-child {
+        text-align: left;
+        margin-top: 2px;
+    }
 }
