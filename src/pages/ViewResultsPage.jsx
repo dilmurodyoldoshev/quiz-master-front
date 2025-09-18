@@ -1,6 +1,8 @@
 // src/pages/ViewResultsPage.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "../styles/viewResult.css";
+
 
 const API_URL = "http://localhost:8080/api/teacher";
 

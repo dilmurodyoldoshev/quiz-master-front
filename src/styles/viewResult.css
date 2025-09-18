@@ -1,0 +1,104 @@
+/* src/styles/viewResults.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+div {
+    padding: 1rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827; /* Gray-900 */
+    margin-bottom: 1rem;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    background-color: #3b82f6; /* Blue-500 */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-bottom: 1rem;
+}
+
+button:hover {
+    background-color: #2563eb; /* Blue-600 */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+}
+
+table thead {
+    background-color: #f3f4f6; /* Gray-100 */
+}
+
+table thead th {
+    font-weight: 600;
+    color: #111827; /* Gray-900 */
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9fafb; /* Gray-50 */
+}
+
+table tbody tr:hover {
+    background-color: #e5e7eb; /* Gray-200 */
+}
+
+table tbody td {
+    color: #374151; /* Gray-700 */
+    font-size: 0.95rem;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 480px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        margin-bottom: 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        padding: 0.5rem;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    td:last-child {
+        border-bottom: none;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #6b7280; /* Gray-500 */
+    }
+}
