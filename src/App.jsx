@@ -5,7 +5,6 @@ import AdminLayout from "./pages/AdminLayout";
 import UserListPage from "./pages/UserListPage";
 import AddUserPage from "./pages/AddUserPage";
 import ProfilePage from "./pages/ProfilePage";
-import StudentDashboard from "./pages/StudentDashboard";
 import LandingPage from "./pages/LandingPage";
 
 // Teacher
@@ -15,6 +14,17 @@ import CreateQuizPage from "./pages/CreateQuizPage.jsx";
 import AddQuestionPage from "./pages/AddQuestionPage.jsx";
 import ViewQuizPage from "./pages/ViewQuizPage.jsx";
 import ViewResultsPage from "./pages/ViewResultsPage.jsx";
+
+// Student
+import StudentLayout from "./pages/StudentLayout"; // <-- shu qatorda qo‘shish
+import QuizDetailPage from "./pages/QuizDetailPage";
+import QuizQuestionsPage from "./pages/QuizQuestionsPage";
+import QuestionDetailPage from "./pages/QuestionDetailPage";
+import LeaderboardPage from "./pages/LeaderboardPage";
+import ResultsPage from "./pages/ResultsPage";
+import FinishAttemptPage from "./pages/FinishAttemptPage";
+
+
 
 const PrivateRoute = ({ children, allowedRoles }) => {
     const token = localStorage.getItem("token");
@@ -62,13 +72,27 @@ function App() {
                 </Route>
 
                 {/* Student routes */}
-                <Route path="/student" element={
-                    <PrivateRoute allowedRoles={["STUDENT"]}>
-                        <StudentDashboard />
-                    </PrivateRoute>
-                } />
+                <Route
+                    path="/student"
+                    element={
+                        <PrivateRoute allowedRoles={["STUDENT"]}>
+                            <StudentLayout />
+                        </PrivateRoute>
+                    }
+                >
+                    <Route path="/student/quizzes/:quizId" element={<QuizDetailPage />} />
+                    <Route path="/student/quizzes/:quizId/questions/:attemptId" element={<QuizQuestionsPage />} />
+                    <Route path="/student/quizzes/:quizId/questions/:questionId/:attemptId" element={<QuestionDetailPage />} />
+                    <Route path="/student/finish/:attemptId" element={<FinishAttemptPage />} />
+                    <Route path="/student/quizzes/:quizId/leaderboard" element={<LeaderboardPage />} />
+                    <Route path="/student/results" element={<ResultsPage />} />
 
-                {/* Agar noaniq route bo‘lsa, root ga redirect */}
+
+                    {/* Profile */}
+                    <Route path="profile" element={<ProfilePage />} />
+                </Route>
+
+                {/* Fallback */}
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </BrowserRouter>
