@@ -1,0 +1,87 @@
+/* src/styles/studentPage.css */
+
+.student-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #f4f8fb;
+}
+
+.student-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2ecc71; /* yashil rang */
+    color: white;
+    padding: 1rem 2rem;
+}
+
+.student-header .logo {
+    font-size: 1.5rem;
+}
+
+.student-nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.student-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.student-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.logout-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
+}
+
+.student-main {
+    flex: 1;
+    padding: 2rem;
+}
+
+/* Cards for quizzes, attempts, results */
+.quiz-card, .attempt-card, .result-card {
+    background-color: white;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.quiz-card h3, .attempt-card h3, .result-card h3 {
+    margin: 0 0 0.5rem 0;
+}
+
+.quiz-card button, .attempt-card button, .result-card button {
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.7rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.quiz-card button:hover, .attempt-card button:hover, .result-card button:hover {
+    opacity: 0.85;
+}
