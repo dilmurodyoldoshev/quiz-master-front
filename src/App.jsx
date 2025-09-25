@@ -1,11 +1,12 @@
-// App.js
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
+import LandingPage from "./pages/LandingPage";
+
+// Admin
 import AdminLayout from "./pages/AdminLayout";
 import UserListPage from "./pages/UserListPage";
 import AddUserPage from "./pages/AddUserPage";
 import ProfilePage from "./pages/ProfilePage";
-import LandingPage from "./pages/LandingPage";
 
 // Teacher
 import TeacherLayout from "./pages/TeacherLayout.jsx";
@@ -16,15 +17,15 @@ import ViewQuizPage from "./pages/ViewQuizPage.jsx";
 import ViewResultsPage from "./pages/ViewResultsPage.jsx";
 
 // Student
-import StudentLayout from "./pages/StudentLayout"; // <-- shu qatorda qo‘shish
+import StudentLayout from "./pages/StudentLayout";
+import QuizListPage from "./pages/QuizListPage";
 import QuizDetailPage from "./pages/QuizDetailPage";
 import QuizQuestionsPage from "./pages/QuizQuestionsPage";
 import QuestionDetailPage from "./pages/QuestionDetailPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
 import ResultsPage from "./pages/ResultsPage";
 import FinishAttemptPage from "./pages/FinishAttemptPage";
-
-
+import AttemptsPage from "./pages/AttemptsPage.jsx"; // yangi component
 
 const PrivateRoute = ({ children, allowedRoles }) => {
     const token = localStorage.getItem("token");
@@ -42,8 +43,6 @@ function App() {
             <Routes>
                 {/* Landing page */}
                 <Route path="/" element={<LandingPage />} />
-
-                {/* Login page */}
                 <Route path="/login" element={<Login />} />
 
                 {/* Admin routes */}
@@ -72,23 +71,19 @@ function App() {
                 </Route>
 
                 {/* Student routes */}
-                <Route
-                    path="/student"
-                    element={
-                        <PrivateRoute allowedRoles={["STUDENT"]}>
-                            <StudentLayout />
-                        </PrivateRoute>
-                    }
-                >
-                    <Route path="/student/quizzes/:quizId" element={<QuizDetailPage />} />
-                    <Route path="/student/quizzes/:quizId/questions/:attemptId" element={<QuizQuestionsPage />} />
-                    <Route path="/student/quizzes/:quizId/questions/:questionId/:attemptId" element={<QuestionDetailPage />} />
-                    <Route path="/student/finish/:attemptId" element={<FinishAttemptPage />} />
-                    <Route path="/student/quizzes/:quizId/leaderboard" element={<LeaderboardPage />} />
-                    <Route path="/student/results" element={<ResultsPage />} />
-
-
-                    {/* Profile */}
+                <Route path="/student" element={
+                    <PrivateRoute allowedRoles={["STUDENT"]}>
+                        <StudentLayout />
+                    </PrivateRoute>
+                }>
+                    <Route path="quizzes" element={<QuizListPage />} />
+                    <Route path="quizzes/:quizId" element={<QuizDetailPage />} />
+                    <Route path="quizzes/:quizId/questions/:attemptId" element={<QuizQuestionsPage />} />
+                    <Route path="quizzes/:quizId/questions/:questionId/:attemptId" element={<QuestionDetailPage />} />
+                    <Route path="finish/:attemptId" element={<FinishAttemptPage />} />
+                    <Route path="quizzes/:quizId/leaderboard" element={<LeaderboardPage />} />
+                    <Route path="results" element={<ResultsPage />} />
+                    <Route path="attempts" element={<AttemptsPage />} />
                     <Route path="profile" element={<ProfilePage />} />
                 </Route>
 

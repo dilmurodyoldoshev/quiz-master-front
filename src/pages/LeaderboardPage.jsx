@@ -8,8 +8,13 @@ export default function LeaderboardPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(`/api/student/quizzes/${quizId}/leaderboard`)
-            .then(res => setLeaderboard(res.data.data ?? res.data))
+        axios.get(`/api/student/quizzes/${quizId}/leaderboard`, {
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+        })
+            .then(res => {
+                const data = res.data.data ?? res.data;
+                setLeaderboard(Array.isArray(data) ? data : []);
+            })
             .catch(err => console.error(err))
             .finally(() => setLoading(false));
     }, [quizId]);
