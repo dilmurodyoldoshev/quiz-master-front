@@ -4,8 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function QuestionDetailPage() {
-    const { quizId, questionId, attemptId } = useParams();
-    const [question, setQuestion] = useState(null);
+    const { quizId, attemptId } = useParams();
+    const [questions, setQuestions] = useState([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [selected, setSelected] = useState(null);
     const [answered, setAnswered] = useState(false);
     const [isCorrect, setIsCorrect] = useState(null);
@@ -15,43 +16,50 @@ export default function QuestionDetailPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchQuestion = async () => {
+        const fetchQuestions = async () => {
             try {
                 const resp = await axios.get(
-                    `/api/student/quizzes/${quizId}/questions/${questionId}`,
+                    `/api/student/quizzes/${quizId}/questions`,
                     { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
                 );
-                const q = resp.data?.data ?? null;
-                setQuestion(q);
-                setSelected(q?.selectedOption ?? null);
-                if (q?.isCorrect !== undefined) {
-                    setAnswered(true);
-                    setIsCorrect(q.isCorrect);
-                    setScore(q.attemptScore ?? 0);
-                }
+                const qs = resp.data?.data ?? [];
+                setQuestions(qs);
             } catch (err) {
                 console.error(err);
-                alert(err.response?.data?.message ?? "Error fetching question");
+                alert(err.response?.data?.message ?? "Error fetching questions");
             } finally {
                 setLoading(false);
             }
         };
-        fetchQuestion();
-    }, [quizId, questionId]);
+        fetchQuestions();
+    }, [quizId]);
+
+    if (loading) return <p>Loading questions...</p>;
+    if (!questions.length) return <p>No questions found.</p>;
+
+    const question = questions[currentIndex];
+
+    // Backenddagi optionA/B/C/D dan options obyektini yaratamiz
+    const options = {
+        A: question.optionA,
+        B: question.optionB,
+        C: question.optionC,
+        D: question.optionD
+    };
 
     const submitAnswer = async () => {
         if (!selected) return alert("Please select an answer!");
         setSubmitting(true);
         try {
             const resp = await axios.post(
-                `/api/student/attempts/${attemptId}/questions/${questionId}/answer`,
+                `/api/student/attempts/${attemptId}/questions/${question.id}/answer`,
                 { selectedOption: selected },
                 { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );
             const ans = resp.data?.data ?? {};
             setAnswered(true);
             setIsCorrect(ans.isCorrect);
-            setScore(ans.attemptScore ?? 0);
+            setScore(prev => prev + (ans.attemptScore ?? 0));
         } catch (err) {
             console.error(err);
             alert(err.response?.data?.message ?? "Error submitting answer");
@@ -60,19 +68,33 @@ export default function QuestionDetailPage() {
         }
     };
 
-    const goBackToQuestions = () => {
-        navigate(`/student/quizzes/${quizId}/questions/${attemptId}`);
+    const goPrev = () => {
+        setAnswered(false);
+        setSelected(null);
+        setIsCorrect(null);
+        setCurrentIndex(i => i - 1);
     };
 
-    if (loading) return <p>Loading question...</p>;
-    if (!question) return <p>Question not found.</p>;
+    const goNext = () => {
+        setAnswered(false);
+        setSelected(null);
+        setIsCorrect(null);
+        setCurrentIndex(i => i + 1);
+    };
+
+    const finishAttempt = () => {
+        navigate(`/student/quizzes/${quizId}/finish/${attemptId}`);
+    };
 
     return (
         <div className="p-4 bg-white rounded shadow">
             <h2 className="text-2xl font-semibold mb-2">{question.text}</h2>
 
-            <div className="space-y-2 mb-4">
-                {Object.entries(question.options || {}).map(([key, value]) => {
+            <p>Progress: {currentIndex + 1} / {questions.length}</p>
+            <p>Current Score: {score}</p>
+
+            <div className="space-y-2 mb-4 mt-2">
+                {Object.entries(options).map(([key, value]) => {
                     const highlight = answered
                         ? key === question.correctAnswer
                             ? "bg-green-100"
@@ -100,12 +122,6 @@ export default function QuestionDetailPage() {
                 })}
             </div>
 
-            {answered && (
-                <p className={`font-semibold ${isCorrect ? "text-green-600" : "text-red-600"}`}>
-                    {isCorrect ? "Correct!" : "Incorrect!"} — Current Score: {score}
-                </p>
-            )}
-
             <div className="flex space-x-2 mt-2">
                 {!answered && (
                     <button
@@ -116,13 +132,36 @@ export default function QuestionDetailPage() {
                         {submitting ? "Submitting..." : "Submit Answer"}
                     </button>
                 )}
+
                 <button
-                    onClick={goBackToQuestions}
+                    onClick={goPrev}
+                    disabled={currentIndex === 0}
                     className="px-3 py-1 bg-gray-500 text-white rounded"
                 >
-                    Back to Questions
+                    Prev
+                </button>
+
+                <button
+                    onClick={goNext}
+                    disabled={currentIndex === questions.length - 1}
+                    className="px-3 py-1 bg-gray-500 text-white rounded"
+                >
+                    Next
+                </button>
+
+                <button
+                    onClick={finishAttempt}
+                    className="px-3 py-1 bg-green-600 text-white rounded"
+                >
+                    Finish Attempt
                 </button>
             </div>
+
+            {answered && (
+                <p className={`font-semibold mt-2 ${isCorrect ? "text-green-600" : "text-red-600"}`}>
+                    {isCorrect ? "Correct!" : "Incorrect!"}
+                </p>
+            )}
         </div>
     );
 }
