@@ -76,14 +76,29 @@ function App() {
                         <StudentLayout />
                     </PrivateRoute>
                 }>
+                    {/* Quiz ro'yhati */}
                     <Route path="quizzes" element={<QuizListPage />} />
+
+                    {/* Quiz detail va Start tugmasi */}
                     <Route path="quizzes/:quizId" element={<QuizDetailPage />} />
-                    <Route path="quizzes/:quizId/questions/:attemptId" element={<QuizQuestionsPage />} />
-                    <Route path="quizzes/:quizId/questions/:questionId/:attemptId" element={<QuestionDetailPage />} />
-                    <Route path="finish/:attemptId" element={<FinishAttemptPage />} />
+
+                    {/* Quizdagi barcha savollar */}
+                    <Route path="quizzes/:quizId/attempt/:attemptId" element={<QuizQuestionsPage />} />
+
+                    {/* Individual savol */}
+                    <Route path="quizzes/:quizId/attempt/:attemptId/question/:questionId" element={<QuestionDetailPage />} />
+
+                    {/* Finish Attempt */}
+                    <Route path="quizzes/:quizId/finish/:attemptId" element={<FinishAttemptPage />} />
+
+                    {/* Leaderboard va results */}
                     <Route path="quizzes/:quizId/leaderboard" element={<LeaderboardPage />} />
                     <Route path="results" element={<ResultsPage />} />
+
+                    {/* All Attempts */}
                     <Route path="attempts" element={<AttemptsPage />} />
+
+                    {/* Profile */}
                     <Route path="profile" element={<ProfilePage />} />
                 </Route>
 
